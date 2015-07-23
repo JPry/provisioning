@@ -1,0 +1,5 @@
+---
+- hosts: osx
+  roles:
+    - common
+    - osx

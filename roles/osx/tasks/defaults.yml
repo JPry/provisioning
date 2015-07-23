@@ -1,0 +1,5 @@
+---
+# OS X defaults
+
+- name: Automatic scroll bars
+  osx_defaults: key=AppleShowScrollBars value=Automatic

@@ -1,0 +1,7 @@
+# Ignore everything in here
+*
+
+# Except these
+!README.md
+!.gitignore
+!example.yml

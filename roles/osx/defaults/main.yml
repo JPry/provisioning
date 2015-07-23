@@ -1,0 +1,38 @@
+---
+brew_taps:
+  - bradp/vv
+  - homebrew/dupes
+  - homebrew/php
+
+# Normal formulae to install
+brew_install:
+  - git
+  - hub
+  - vcprompt
+  - automake
+  - bash
+  - bash-completion
+  - box
+  - byobu
+  - dpkg
+  - libtool
+  - node
+  - phpunit
+  - python3
+  - rbenv
+  - ruby-build
+  - wget
+  - zsh
+
+  # Taps
+  - php55
+  - php55-memcached
+  - php55-xdebug
+  - composer
+  - vv
+
+# These formulae should be installed with the --HEAD option
+brew_install_head:
+  - ansible
+
+homebrew_update: false

@@ -1,0 +1,9 @@
+---
+# defaults file for common
+ruby_gems:
+  - fpm
+  - github-pages
+  - jekyll
+  - sass
+
+osx_installer: False

@@ -1,0 +1,16 @@
+---
+# tasks file for common
+- name: Install dotfiles
+  git: dest="~/dotfiles" repo="https://github.com/JPry/dotfiles.git" force=yes
+
+- name: Symlink dotfiles
+  shell: install/symlinks.sh
+  args:
+    chdir: ~/dotfiles
+    executable: /bin/bash
+    creates: ~/.zshrc
+  when: osx_installer == false
+
+- name: Install Gems
+  gem: name="{{ item }}" state=present
+  with_items: "{{ ruby_gems }}"
