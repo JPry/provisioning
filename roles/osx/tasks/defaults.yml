@@ -7,6 +7,8 @@
 # General UI/UX                                                               #
 ###############################################################################
 
+- name: Show battery percentage
+  osx_defaults: domain=com.apple.menuextra.battery key=ShowPercent type=string value=YES
 
 - name: Automatic scroll bars
   osx_defaults: key=AppleShowScrollBars value=Automatic
@@ -56,8 +58,10 @@
 ###############################################################################
 
 
-- name: Enable tap to click with trackpad
+- name: Enable tapping with trackpad
   osx_defaults: key=com.apple.mouse.tapBehavior type=int value=1
+
+- name: Enable tapping for external trackpad
   osx_defaults: domain=com.apple.driver.AppleBluetoothMultitouch.trackpad key=Clicking type=bool value=true
 
 - name: Increase sound quality for Bluetooth headphones/headsets
@@ -69,10 +73,20 @@
 - name: Set fast keyboard repeat rate
   osx_defaults: key=KeyRepeat type=int value=0
 
-- name: Set language and text formats
-  osx_defaults: key=AppleLanguages type=array value=["en"]
+# Array values are broken, so this is disabled for now.
+#- name: Set languages
+#  osx_defaults:
+#    key: AppleLanguages
+#    type: array
+#    value: ["en"]
+
+- name: Set Locale
   osx_defaults: key=AppleLocale value="en_US@currency=USD"
+
+- name: Set measurement units
   osx_defaults: key=AppleMeasurementUnits value="Inches"
+
+- name: Disable metric units
   osx_defaults: key=AppleMetricUnits type=bool value=false
 
 
@@ -81,9 +95,11 @@
 ###############################################################################
 
 
-- name: Require password immediately after sleep/screensaver
+- name: Require password after sleep/screensaver
   osx_defaults: domain=com.apple.screensaver key=askForPassword type=int value=1
-  osx_defaults: domain=com.apple.screensaver key=askForPasswordDelay type=int value=0
+
+- name: Require password 5s after sleep/screensaver
+  osx_defaults: domain=com.apple.screensaver key=askForPasswordDelay type=float value=5
 
 - name: Save screenshots to desktop
   osx_defaults: domain=com.apple.screencapture key=location value="${HOME}/Desktop"
@@ -98,7 +114,7 @@
   osx_defaults: key=AppleFontSmoothing type=int value=2
 
 - name: Enable HiDPI display modes
-  osx_defaults: domain=/Library/Preferences/com.apple.windowserver key=DisplayResolutionEnabled type=bool value=true
+  osx_defaults: domain=com.apple.windowserver key=DisplayResolutionEnabled type=bool value=true
 
 
 ###############################################################################
@@ -158,29 +174,37 @@
     - skip-verify-remote
 
 - name: Automatically open a finder window when a volume is mounted
-  osx_defaults: domain=com.apple.frameworks.diskimages key=auto-open-ro-root type=bool value=true
-  osx_defaults: domain=com.apple.frameworks.diskimages key=auto-open-rw-root type=bool value=true
+  osx_defaults:
+    domain: com.apple.frameworks.diskimages
+    key: "{{ item }}"
+    type: bool
+    value: true
+  with_items:
+    - auto-open-ro-root
+    - auto-open-rw-root
+
+- name: Open finder for removable disk
   osx_defaults: domain=com.apple.finder key=OpenWindowForNewRemovableDisk type=bool value=true
 
 - name: Enable snap-to-grid for icons on desktop and other views
   shell: /usr/libexec/PlistBuddy -c "{{ item }}" ~/Library/Preferences/com.apple.finder.plist
   with_items:
     - "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid"
-    - "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid"
+    - "Set :StandardViewSettings:IconViewSettings:arrangeBy grid"
     - "Set :StandardViewSettings:IconViewSettings:arrangeBy grid"
 
 - name: Increase grid spacing for icons on desktop and other views
   shell: /usr/libexec/PlistBuddy -c "{{ item }}" ~/Library/Preferences/com.apple.finder.plist
   with_items:
     - "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100"
-    - "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100"
+    - "Set :StandardViewSettings:IconViewSettings:gridSpacing 100"
     - "Set :StandardViewSettings:IconViewSettings:gridSpacing 100"
 
 - name: Increase size of icons on desktop and other views
   shell: /usr/libexec/PlistBuddy -c "{{ item }}" ~/Library/Preferences/com.apple.finder.plist
   with_items:
     - "Set :DesktopViewSettings:IconViewSettings:iconSize 80"
-    - "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80"
+    - "Set :StandardViewSettings:IconViewSettings:iconSize 80"
     - "Set :StandardViewSettings:IconViewSettings:iconSize 80"
 
 - name: Use column view in Finder by default
@@ -247,13 +271,21 @@
   # 11: Launchpad
   # 12: Notification Center
 - name: Setup Hot Corners
-  osx_defaults: domain=com.apple.dock key=wvous-{{ item[0] }}-corner type=int value={{ item[1] }}
+  osx_defaults:
+    domain: com.apple.dock
+    key: "wvous-{{ item[0] }}-corner"
+    type: int
+    value: "{{ item[1] }}"
   with_nested:
     - [ 'bl', 'br', 'tl', 'tr' ]
     - [    4,    3,    5,    7 ]
 
 - name: Setup Hot Corners modifiers
-  osx_defaults: domain=com.apple.dock key=wvous-{{ item }}-modifier type=int value=0
+  osx_defaults:
+    domain: com.apple.dock
+    key: "wvous-{{ item }}-modifier"
+    type: int
+    value: 0
   with_items:
     - bl
     - br
@@ -268,10 +300,14 @@
 
 - name: Don't send search queries to Apple
   osx_defaults: domain=com.apple.Safari key=UniversalSearchEnabled type=bool value=false
+
+- name: Suppress search suggestions
   osx_defaults: domain=com.apple.Safari key=SuppressSearchSuggestions type=bool value=true
 
 - name: Press Tab to highlight each item on a web page
   osx_defaults: domain=com.apple.Safari key=WebKitTabToLinksPreferenceKey type=bool value=true
+
+- name: Tabs to links on webpage
   osx_defaults: domain=com.apple.Safari key=com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks type=bool value=true
 
 - name: Show full URL in the address bar
@@ -296,7 +332,7 @@
   osx_defaults: domain=com.apple.Safari key=FindOnPageMatchesWordStartsOnly type=bool value=false
 
 - name: Remove useless icons from Safari's bookmarks bar
-  osx_defaults: domain=com.apple.Safari key=ProxiesInBookmarksBar state=absen
+  osx_defaults: domain=com.apple.Safari key=ProxiesInBookmarksBar state=absent
 
 - name: Enable the Develop menu and the Web Inspector in Safari
   osx_defaults: domain=com.apple.Safari key={{ item }} type=bool value=true
@@ -346,6 +382,8 @@
 
 - name: Sort Activity Monitor results by CPU usage
   osx_defaults: domain=com.apple.ActivityMonitor key=SortColumn value="CPUUsage"
+
+- name: Sort activity monitor direction
   osx_defaults: domain=com.apple.ActivityMonitor key=SortDirection type=int value=0
 
 
