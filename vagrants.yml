@@ -1,0 +1,6 @@
+---
+- hosts: vagrants
+  remote_user: vagrant
+  roles:
+    - ruby
+    - common
