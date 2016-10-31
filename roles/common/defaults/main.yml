@@ -6,4 +6,5 @@ ruby_gems:
   - jekyll
   - sass
 
-osx_installer: False
+do_symlinks: True
+do_gems: False

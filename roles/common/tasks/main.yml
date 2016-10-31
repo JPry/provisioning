@@ -2,18 +2,30 @@
 # tasks file for common
 - name: Install dotfiles
   git: dest="~/dotfiles" repo="https://github.com/JPry/dotfiles.git" force=yes
+  register: dotfiles_updated
 
-- name: Symlink dotfiles
+- name: Echo dotfiles result
+  debug:
+    var: dotfiles_updated
+
+- name: Run dotfiles installer
   shell: install/symlinks.sh
   args:
     chdir: ~/dotfiles
     executable: /bin/bash
-    creates: ~/.zshrc
-  when: osx_installer == false
+  when: dotfiles_updated.changed
 
 - name: Install Gems
-  gem: name="{{ item }}" state=present
+  become: true
+  gem: name="{{ item }}" state=latest user_install=false include_doc=true
   with_items: "{{ ruby_gems }}"
+  when: do_gems == true
 
 - name: Insall Oh My Zsh
   git: dest="~/.oh-my-zsh" repo="https://github.com/robbyrussell/oh-my-zsh.git"
+
+- name: Synchronize .ssh folder
+  synchronize:
+    copy_links: yes
+    src: ~/.ssh
+    dest: ~/
