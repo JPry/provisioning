@@ -1,0 +1,9 @@
+---
+- hosts: osx
+  vars:
+    do_osx_provision: true
+  vars_files:
+    - private_vars/osx.yml
+  roles:
+    - osx
+    - common
