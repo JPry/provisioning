@@ -1,38 +1,77 @@
 ---
-brew_taps:
+#########################
+# Homebrew variables    #
+#########################
+homebrew_repo: https://github.com/Homebrew/brew
+homebrew_prefix: /usr/local
+homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+homebrew_brew_bin_path: /usr/local/bin
+
+homebrew_upgrade_all_packages: no
+homebrew_cask_appdir: /Applications
+homebrew_use_brewfile: false
+homebrew_brewfile_dir: '~'
+
+homebrew_installed_packages:
+  - automake
+  - bash
+  - bash-completion
+  - byobu
+  - dpkg
+  - gettext
+  - git
+  - hub
+  - libmemcached
+  - libtool
+  - nmap
+  - node
+  - pyenv
+  - pyenv-virtualenv
+  - python
+  - python3
+  - rbenv
+  - redis
+  - rename
+  - ruby-build
+  - sqlite
+  - the_silver_searcher
+  - tig
+  - tree
+  - utf8proc
+  - vcprompt
+  - wget
+  - zlib
+  - zsh
+
+  # Taps
+  - php70
+  - php70-xdebug
+  - phpunit
+  - box
+  - composer
+  - vv
+
+homebrew_taps:
+  - homebrew/core
+  - caskroom/cask
   - bradp/vv
   - homebrew/dupes
   - homebrew/php
 
-# Normal formulae to install
-brew_install:
-  - git
-  - hub
-  - vcprompt
-  - automake
-  - bash
-  - bash-completion
-  - box
-  - byobu
-  - dpkg
-  - libtool
-  - node
-  - phpunit
-  - python3
-  - rbenv
-  - ruby-build
-  - wget
-  - zsh
+homebrew_cask_apps:
+  - alfred
+  - filezilla
+  - firefox
+  - github-desktop
+  - google-chrome
+  - harvest
+  - intellij-idea
+  - jing
+  - sequel-pro
+  - skype
+  - slack
+  - vagrant
+  - virtualbox
 
-  # Taps
-  - php55
-  - php55-memcached
-  - php55-xdebug
-  - composer
-  - vv
-
-# These formulae should be installed with the --HEAD option
-brew_install_head:
+homebrew_install_head:
   - ansible
-
-homebrew_update: false
