@@ -91,10 +91,11 @@
   always_run: yes
   changed_when: false
 
-# Use command module instead of homebrew_cask so appdir can be used.
 - name: Install configured cask applications.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+#    options: "appdir={{ homebrew_cask_appdir }}" # enable options once Ansible is 2.2 or greater
   with_items: "{{ homebrew_cask_apps }}"
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
@@ -102,7 +103,8 @@
   stat:
     path: "{{ homebrew_brewfile_dir }}/Brewfile"
   register: homebrew_brewfile
+  when: homebrew_use_brewfile
 
 - name: Install from Brewfile.
   command: "brew bundle chdir={{ homebrew_brewfile_dir }}"
-  when: homebrew_brewfile.stat.exists and homebrew_use_brewfile
+  when: homebrew_use_brewfile and homebrew_brewfile.stat.exists
