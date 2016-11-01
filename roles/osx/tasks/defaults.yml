@@ -7,6 +7,13 @@
 # General UI/UX                                                               #
 ###############################################################################
 
+- name: Set the theme to dark mode
+  osx_defaults:
+    domain: /Library/Preferences/.GlobalPreferences
+    key: AppleInterfaceTheme
+    value: Dark
+  become: yes
+
 - name: Show battery percentage
   osx_defaults: domain=com.apple.menuextra.battery key=ShowPercent type=string value=YES
 
@@ -72,6 +79,7 @@
 
 - name: Set fast keyboard repeat rate
   osx_defaults: key=KeyRepeat type=int value=0
+  become: true
 
 # Array values are broken, so this is disabled for now.
 #- name: Set languages
@@ -103,6 +111,7 @@
 
 - name: Save screenshots to desktop
   osx_defaults: domain=com.apple.screencapture key=location value="${HOME}/Desktop"
+  become: true
 
 - name: Save screenshots in PNG format
   osx_defaults: domain=com.apple.screencapture key=type value="png"
@@ -429,5 +438,19 @@
   osx_defaults: domain=com.apple.appstore key=ShowDebugMenu type=bool value=true
 
 
+###############################################################################
+# Terminal                                                                    #
+###############################################################################
 
+- name: Keep windows when closing the terminal
+  osx_defaults:
+    domain: com.apple.terminal
+    key: NSQuitAlwaysKeepsWindows
+    type: bool
+    value: true
 
+- name: Use Pro as the default Terminal window
+  osx_defaults:
+    domain: com.apple.terminal
+    key: Default Window Settings
+    value: Pro
