@@ -24,9 +24,3 @@
 
 - name: Insall Oh My Zsh
   git: dest="~/.oh-my-zsh" repo="https://github.com/robbyrussell/oh-my-zsh.git"
-
-- name: Synchronize .ssh folder
-  synchronize:
-    copy_links: yes
-    src: ~/.ssh
-    dest: ~/
