@@ -1,0 +1,7 @@
+---
+# defaults file for vvv
+vvv_dir: ~/vvv
+vagrant_plugins:
+  - vagrant-hostsupdater
+  - vagrant-triggers
+  - vagrant-vbguest

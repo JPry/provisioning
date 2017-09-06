@@ -1,0 +1,23 @@
+---
+# tasks file for vvv
+
+- name: Install VVV
+  git:
+    dest: "{{ vvv_dir }}"
+    repo: https://github.com/Varying-Vagrant-Vagrants/VVV.git
+    force: yes
+    accept_hostkey: yes
+
+- name: Find installed vagrant plugins
+  shell: "/usr/local/bin/vagrant plugin list"
+  args:
+    executable: /bin/bash
+  register: vagrant_plugins_existing
+  changed_when: false
+
+- name: Install Vagrant plugins
+  shell: "/usr/local/bin/vagrant plugin install {{ item }}"
+  with_items: "{{ vagrant_plugins }}"
+  args:
+    executable: /bin/bash
+  when: "'{{ item }}' not in vagrant_plugins_existing.stdout"

@@ -8,10 +8,3 @@ ruby_gems:
 
 do_symlinks: True
 do_gems: False
-
-# Vagrant stuff
-vvv_dir: ~/vvv
-vagrant_plugins:
-  - vagrant-hostsupdater
-  - vagrant-triggers
-  - vagrant-vbguest
