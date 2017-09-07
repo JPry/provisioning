@@ -3,7 +3,8 @@ import vagrant
 import subprocess
 import json
 
-class Vagrant_Inventory(object):
+
+class VagrantInventory(object):
 
     def main(self):
         vagrants = self.find_vagrants()
@@ -33,7 +34,8 @@ class Vagrant_Inventory(object):
 
         print(json.dumps(r, indent=4))
 
-    def get_output(self, *popenargs, **kwargs):
+    @staticmethod
+    def get_output(*popenargs, **kwargs):
         """
         Takes a command, or a list of command arguments. Executes the command, and returns a tuple of
         (output, error, return code)
@@ -41,12 +43,13 @@ class Vagrant_Inventory(object):
         process = subprocess.Popen(*popenargs, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
         output, err = process.communicate()
         retcode = process.poll()
-        return (output, err, retcode)
+        return output, err, retcode
 
     def find_vagrants(self):
-        '''
+        """
         Find all vagrants running on this host.
-        '''
+        :return:
+        """
 
         vagrants = []
         output, err, retcode = self.get_output(['vagrant', 'global-status'])
@@ -76,9 +79,10 @@ class Vagrant_Inventory(object):
 
         return vagrants
 
+
 if __name__ == "__main__":
     try:
-        vi = Vagrant_Inventory()
+        vi = VagrantInventory()
         vi.main()
     except KeyboardInterrupt:
         print("Exiting due to keyboard interruption")
@@ -86,4 +90,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(str(e))
         exit(1)
-
