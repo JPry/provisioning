@@ -1,0 +1,11 @@
+---
+- hosts: droplets
+  roles:
+    - common
+    - zsh
+    - geerlingguy.git
+    - role: invoiceplane
+      when: inventory_hostname == "invoiceplane"
+
+  vars_files:
+    - private_vars/droplets.yml

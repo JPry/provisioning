@@ -1,2 +1,5 @@
 [osx]
 localhost ansible_connection=local
+
+[droplets]
+invoiceplane ansible_host=ip.do ansible_user=root
