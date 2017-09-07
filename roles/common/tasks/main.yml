@@ -22,5 +22,3 @@
   with_items: "{{ ruby_gems }}"
   when: do_gems == true
 
-- name: Insall Oh My Zsh
-  git: dest="~/.oh-my-zsh" repo="https://github.com/robbyrussell/oh-my-zsh.git"

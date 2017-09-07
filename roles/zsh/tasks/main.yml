@@ -1,0 +1,17 @@
+---
+# tasks file for zsh
+
+- name: Insall Oh My Zsh
+  git: dest="~/.oh-my-zsh" repo="https://github.com/robbyrussell/oh-my-zsh.git"
+
+- name: Install Z shell (Debian family)
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: zsh
+    state: present
+
+- name: Set login shell (Debian family)
+  when: ansible_os_family == 'Debian'
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
