@@ -68,7 +68,7 @@ dependencies:
         priv: "{{ ip_db_name }}.*:ALL"
 
   - role: geerlingguy.nginx
-    nginx_vhost_template: "{{ role_path }}/templates/vhost.j2"
+    nginx_vhost_template: "{{ playbook_dir }}/roles/invoiceplane/templates/vhost.j2"
     nginx_upstreams:
       - name: php70
         servers:
