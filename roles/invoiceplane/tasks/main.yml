@@ -1,0 +1,73 @@
+---
+# tasks file for invoiceplane
+
+- name: Set up InvoicePlane files
+  git:
+    dest: /var/www/invoiceplane
+    repo: https://github.com/InvoicePlane/InvoicePlane.git
+    force: yes
+    refspec: v1.5.4
+  register: ip_git_status
+
+- name: Debug git status
+  debug:
+    var: ip_git_status
+    verbosity: 2
+
+- name: Ensure InvoicePlane config file
+  copy:
+    remote_src: true
+    src: /var/www/invoiceplane/ipconfig.php.example
+    dest: /var/www/invoiceplane/ipconfig.php
+
+- name: Add 'Managed with Ansible' notice
+  lineinfile:
+    path: /var/www/invoiceplane/ipconfig.php
+    line: "# This file is managed by Ansible. DO NOT MODIFY THIS FILE DIRECTLY\n"
+    insertbefore: '^# InvoicePlane Configuration File'
+
+- name: Ensure lines in the config file
+  ini_file:
+    state: present
+    dest: /var/www/invoiceplane/ipconfig.php
+    section: null
+    no_extra_spaces: yes
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - option: IP_URL
+      value: "http://{{ ansible_fqdn }}"
+    - option: DB_HOSTNAME
+      value: "localhost"
+    - option: DB_USERNAME
+      value: "{{ ip_db_user }}"
+    - option: DB_PASSWORD
+      value: "{{ ip_db_pass }}"
+    - option: DB_DATABASE
+      value: "{{ ip_db_name }}"
+    - option: DB_PORT
+      value: "{{ mysql_port }}"
+
+- name: Install node dependencies
+  shell: yarn install --no-lockfile
+  args:
+    chdir: /var/www/invoiceplane
+    creates: node_modules
+  register: ip_yarn_install
+
+- name: Debug yarn install
+  debug:
+    var: ip_yarn_install
+    verbosity: 2
+
+- name: Run Composer
+  shell: composer install -o --no-interaction --no-dev --no-suggest
+  args:
+    chdir: /var/www/invoiceplane
+  when: ip_git_status.changed
+
+- name: Run Grunt
+  shell: "{{ npm_config_prefix }}/bin/grunt"
+  args:
+    chdir: /var/www/invoiceplane
+  when: ip_git_status.changed or ip_yarn_install.changed

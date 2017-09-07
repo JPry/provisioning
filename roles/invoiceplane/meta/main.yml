@@ -1,0 +1,84 @@
+galaxy_info:
+  author: Jeremy Pry
+  description: your description
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  license: MIT
+
+  min_ansible_version: 1.2
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  # Optionally specify the branch Galaxy will use when accessing the GitHub
+  # repo for this role. During role install, if no tags are available,
+  # Galaxy will use this branch. During import Galaxy will access files on
+  # this branch. If Travis integration is configured, only notifications for this
+  # branch will be accepted. Otherwise, in all cases, the repo's default branch
+  # (usually master) will be used.
+  #github_branch:
+
+  #
+  # platforms is a list of platforms, and each platform has a name and a list of versions.
+  #
+  # platforms:
+  # - name: Fedora
+  #   versions:
+  #   - all
+  #   - 25
+  # - name: SomePlatform
+  #   versions:
+  #   - all
+  #   - 1.0
+  #   - 7
+  #   - 99.99
+
+  galaxy_tags: []
+
+dependencies:
+  - role: geerlingguy.php
+    php_enable_php_fpm: true
+    php_use_managed_ini: true
+    php_date_timezone: America/New_York
+    php_webserber_daemon: nginx
+    php_memory_limit: "512M"
+
+  - role: geerlingguy.composer
+    composer_keep_updated: true
+    composer_global_packages:
+      - { name: phpunit/phpunit }
+    composer_add_to_path: true
+
+  - role: geerlingguy.nodejs
+    nodejs_npm_global_packages:
+      - grunt-cli
+
+  - { role: ocha.yarn }
+
+  - role: geerlingguy.mysql
+    become: yes
+    mysql_databases:
+      - { name: "{{ ip_db_name }}" }
+    mysql_users:
+      - name: "{{ ip_db_user }}"
+        password: "{{ ip_db_pass }}"
+        priv: "{{ ip_db_name }}.*:ALL"
+
+  - role: geerlingguy.nginx
+    nginx_vhost_template: "{{ role_path }}/templates/vhost.j2"
+    nginx_upstreams:
+      - name: php70
+        servers:
+          - 127.0.0.1:9000
+
+    nginx_vhosts:
+      - listen: "443 ssl"
+        server_name: "{{ ansible_fqdn }}"
+        server_name_redirect: "{{ ansible_fqdn }}"
+        server_name_redirect_listen: "80"
+        root: /var/www/invoiceplane
+        index: index.php
+
