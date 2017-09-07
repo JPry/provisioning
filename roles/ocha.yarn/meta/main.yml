@@ -1,0 +1,25 @@
+galaxy_info:
+  author: Iuri Gagnidze
+  description: Install YARN package manager for Ubuntu/RHEL
+  license: license (BSD, MIT)
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Ubuntu
+      versions:
+      - trusty
+      - xenial
+    - name: EL
+      versions:
+      - 6
+      - 7
+
+  galaxy_tags:
+    - packaging
+    - yarn
+    - nodejs
+    - repository
+    - repo
+
+dependencies: []
