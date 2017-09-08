@@ -3,10 +3,10 @@
 
 - name: Set up InvoicePlane files
   git:
-    dest: /var/www/invoiceplane
-    repo: https://github.com/InvoicePlane/InvoicePlane.git
+    dest: "{{ ip_web_root }}"
+    repo: "{{ ip_git_url }}"
     force: yes
-    refspec: v1.5.4
+    refspec: "{{ ip_git_refspec }}"
   register: ip_git_status
 
 - name: Debug git status
@@ -16,7 +16,7 @@
 
 - name: Set owner for invoiceplane directory
   file:
-    path: /var/www/invoiceplane
+    path: "{{ ip_web_root }}"
     owner: "{{ nginx_user }}"
     group: "{{ nginx_user }}"
     recurse: yes
@@ -25,26 +25,27 @@
 - name: Ensure InvoicePlane config file
   copy:
     remote_src: true
-    src: /var/www/invoiceplane/ipconfig.php.example
-    dest: /var/www/invoiceplane/ipconfig.php
+    src: "{{ ip_web_root }}/ipconfig.php.example"
+    dest: "{{ ip_web_root }}/ipconfig.php"
+    force: no
 
 - name: Add 'Managed with Ansible' notice
   lineinfile:
-    path: /var/www/invoiceplane/ipconfig.php
-    line: "# This file is managed by Ansible. DO NOT MODIFY THIS FILE DIRECTLY\n"
-    insertbefore: '^# InvoicePlane Configuration File'
+    path: "{{ ip_web_root }}/ipconfig.php"
+    line: "# InvoicePlane Configuration File - managed by Ansible. DO NOT MODIFY THIS FILE DIRECTLY"
+    regexp: '^# InvoicePlane Configuration File$'
 
 - name: Ensure lines in the config file
   ini_file:
     state: present
-    dest: /var/www/invoiceplane/ipconfig.php
+    dest: "{{ ip_web_root }}/ipconfig.php"
     section: null
     no_extra_spaces: yes
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
     - option: IP_URL
-      value: "http://{{ ansible_fqdn }}"
+      value: "{{ ip_url }}"
     - option: DB_HOSTNAME
       value: "localhost"
     - option: DB_USERNAME
@@ -55,11 +56,17 @@
       value: "{{ ip_db_name }}"
     - option: DB_PORT
       value: "{{ mysql_port }}"
+    - option: REMOVE_INDEXPHP
+      value: "{{ ip_remove_indexphp }}"
+    - option: DISABLE_READ_ONLY
+      value: "{{ ip_disable_invoice_readonly }}"
+    - option: DISABLE_SETUP
+      value: "{{ ip_disable_setup }}"
 
 - name: Install node dependencies
   shell: yarn install --no-lockfile
   args:
-    chdir: /var/www/invoiceplane
+    chdir: "{{ ip_web_root }}"
     creates: node_modules
   register: ip_yarn_install
 
@@ -71,11 +78,11 @@
 - name: Run Composer
   shell: composer install -o --no-interaction --no-dev --no-suggest
   args:
-    chdir: /var/www/invoiceplane
+    chdir: "{{ ip_web_root }}"
   when: ip_git_status.changed
 
 - name: Run Grunt
   shell: "{{ npm_config_prefix }}/bin/grunt"
   args:
-    chdir: /var/www/invoiceplane
+    chdir: "{{ ip_web_root }}"
   when: ip_git_status.changed or ip_yarn_install.changed
