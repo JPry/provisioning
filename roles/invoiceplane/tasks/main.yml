@@ -14,6 +14,14 @@
     var: ip_git_status
     verbosity: 2
 
+- name: Set owner for invoiceplane directory
+  file:
+    path: /var/www/invoiceplane
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
+    recurse: yes
+    state: directory
+
 - name: Ensure InvoicePlane config file
   copy:
     remote_src: true
