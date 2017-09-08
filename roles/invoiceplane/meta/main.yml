@@ -43,7 +43,7 @@ dependencies:
     php_enable_php_fpm: true
     php_use_managed_ini: true
     php_date_timezone: America/New_York
-    php_webserber_daemon: nginx
+    php_webserver_daemon: nginx
     php_memory_limit: "512M"
 
   - { role: geerlingguy.php-mysql }
