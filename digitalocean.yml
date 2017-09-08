@@ -6,6 +6,9 @@
     - geerlingguy.git
     - role: invoiceplane
       when: inventory_hostname == "invoiceplane"
+      ip_disable_invoice_readonly: "true"
+      ip_remove_indexphp: "true"
+      ip_disable_setup: "true"
 
   vars_files:
     - private_vars/droplets.yml
