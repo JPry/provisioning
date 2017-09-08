@@ -46,6 +46,8 @@ dependencies:
     php_webserber_daemon: nginx
     php_memory_limit: "512M"
 
+  - { role: geerlingguy.php-mysql }
+
   - role: geerlingguy.composer
     composer_keep_updated: true
     composer_global_packages:
