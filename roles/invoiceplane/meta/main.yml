@@ -84,3 +84,7 @@ dependencies:
         root: /var/www/invoiceplane
         index: index.php
 
+  - role: thefinn93.letsencrypt
+    letsencrypt_email: "webmaster@{{ ansible_domain }}"
+    letsencrypt_webroot_path: "{{ ip_web_root }}"
+
