@@ -35,7 +35,27 @@
     line: "# InvoicePlane Configuration File - managed by Ansible. DO NOT MODIFY THIS FILE DIRECTLY"
     regexp: '^# InvoicePlane Configuration File$'
 
-- name: Ensure lines in the config file
+- name: Check SSL cert
+  stat:
+    path: "/etc/letsencrypt/live/{{ ip_domain }}/fullchain.pem"
+  register: ip_ssl_cert
+
+- name: Check SSL key
+  stat:
+    path: "/etc/letsencrypt/live/{{ ip_domain }}/privkey.pem"
+  register: ip_ssl_key
+
+- name: Use SSL
+  shell: /bin/true
+  register: ip_use_ssl
+  when: ip_ssl_key.stat.exists and ip_ssl_cert.stat.exists
+
+- name: Ensure HTTPS for URL
+  set_fact:
+    ip_url: "{{ ip_url|replace('http://', 'https://') }}"
+  when: ip_use_ssl.changed
+
+- name: Ensure lines in ipconfig.php file
   ini_file:
     state: present
     dest: "{{ ip_web_root }}/ipconfig.php"
@@ -86,3 +106,41 @@
   args:
     chdir: "{{ ip_web_root }}"
   when: ip_git_status.changed or ip_yarn_install.changed
+
+- name: Add SSL to Nginx config
+  become: true
+  when: ip_use_ssl.changed
+  blockinfile:
+    path: "{{ nginx_vhost_path }}/{{ ip_domain }}.conf"
+    marker: "    ### {mark} SSL ###"
+    block: |2+
+          ssl_certificate     /etc/letsencrypt/live/{{ ip_domain }}/fullchain.pem;
+          ssl_certificate_key /etc/letsencrypt/live/{{ ip_domain }}/privkey.pem;
+  notify:
+    - reload nginx
+
+- name: Add Nginx redirect from HTTP to HTTPS
+  become: true
+  when: ip_use_ssl.changed
+  blockinfile:
+    path: "{{ nginx_vhost_path }}/{{ ip_domain }}.conf"
+    marker: "### {mark} REDIRECT ###"
+    block: |2+
+      server {
+          listen      80;
+          server_name {{ ip_domain }};
+          return      301 https://{{ ip_domain }}$request_uri;
+      }
+  notify:
+    - reload nginx
+
+- name: Update Nginx listen to port 443
+  become: true
+  when: ip_use_ssl.changed
+  blockinfile:
+    path: "{{ nginx_vhost_path }}/{{ ip_domain }}.conf"
+    marker: "    ### {mark} LISTEN ###"
+    block: |2+
+          listen      443 ssl;
+  notify:
+    - reload nginx

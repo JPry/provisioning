@@ -77,11 +77,9 @@ dependencies:
           - 127.0.0.1:9000
 
     nginx_vhosts:
-      - listen: "443 ssl"
-        server_name: "{{ ansible_fqdn }}"
-        server_name_redirect: "{{ ansible_fqdn }}"
-        server_name_redirect_listen: "80"
-        root: /var/www/invoiceplane
+      - listen: "80"
+        server_name: "{{ ip_domain }}"
+        root: "{{ ip_web_root }}"
         index: index.php
 
   - role: thefinn93.letsencrypt
