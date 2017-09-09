@@ -1,22 +1,24 @@
 {% extends 'roles/geerlingguy.nginx/templates/vhost.j2' %}
 
 {% block server_redirect %}
-{% if item.server_name_redirect is defined %}
-server {
-    listen       {{ item.server_name_redirect_listen | default('80') }};
-    server_name  {{ item.server_name_redirect }};
-    return       301 https://{{ item.server_name.split(' ')[0] }}$request_uri;
-}
-{% endif %}
+### BEGIN REDIRECT ###
+{{ super() }}
+### END REDIRECT ###
 {% endblock %}
 
 {% block server_basic %}
 
+    ### BEGIN LISTEN ###
     listen      {{ item.listen | default('80') }};
+    ### END LISTEN ###
+
     server_name {{ item.server_name }};
     root        {{ item.root }};
     set         $upstream php70;
     index       {{ item.index | default('index.html index.htm') }};
+
+    ### BEGIN SSL ###
+    ### END SSL ###
 {% endblock %}
 
 {% block server_end %}
