@@ -9,6 +9,11 @@
       ip_disable_invoice_readonly: "true"
       ip_remove_indexphp: "true"
       ip_disable_setup: "true"
+    - dev-sec.nginx-hardening
+    - role: geerlingguy.security
+      security_ssh_permit_root_login: "yes"
+      security_sudoers_passwordless:
+        - jpry
 
   vars_files:
     - private_vars/droplets.yml
