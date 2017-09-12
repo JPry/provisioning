@@ -17,3 +17,6 @@
 
   vars_files:
     - private_vars/droplets.yml
+
+  vars:
+    nginx_client_max_body_size: 2m
