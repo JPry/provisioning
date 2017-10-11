@@ -58,7 +58,9 @@ dependencies:
     nodejs_npm_global_packages:
       - grunt-cli
 
-  - { role: ocha.yarn }
+  - role: ocha.yarn
+    # Ensure that the Yarn key is from HTTPS
+    yarn_debian_repo_gpg_key_url: "https://dl.yarnpkg.com/debian/pubkey.gpg"
 
   - role: geerlingguy.mysql
     become: yes
