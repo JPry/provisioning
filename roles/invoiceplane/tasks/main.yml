@@ -144,3 +144,14 @@
           listen      443 ssl;
   notify:
     - reload nginx
+
+- name: Include custom templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode|default('0644') }}"
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
+  with_items:
+    - src: InvoicePlane_Company_Web.j2
+      dest: "{{ ip_web_root }}/application/views/invoice_templates/public/InvoicePlane_Company_Web.php"
