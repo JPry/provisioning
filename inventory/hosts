@@ -1,5 +1,6 @@
 [osx]
 localhost ansible_connection=local
+pp-imac ansible_host=JP-Prospress-iMac.local ansible_user=jpry
 
 [droplets]
 invoiceplane ansible_host=ip.do ansible_user=root
