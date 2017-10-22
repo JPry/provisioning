@@ -13,17 +13,14 @@ homebrew_use_brewfile: false
 homebrew_brewfile_dir: '~'
 
 homebrew_installed_packages:
-  - automake
   - bash
   - bash-completion
   - byobu
   - dpkg
   - gettext
   - git
-  - gpg
   - hub
   - libmemcached
-  - libtool
   - nmap
   - node
   - pyenv
@@ -33,29 +30,27 @@ homebrew_installed_packages:
   - rbenv
   - redis
   - rename
-  - ruby-build
-  - sqlite
   - the_silver_searcher
   - tig
   - tree
   - utf8proc
   - vcprompt
   - wget
+  - yarn
   - zlib
   - zsh
 
   # Taps
+  - box
+  - composer
   - php70
   - php70-xdebug
   - phpunit
-  - box
-  - composer
-  - vv
+  - wp-cli
 
 homebrew_taps:
   - homebrew/core
   - caskroom/cask
-  - bradp/vv
   - homebrew/dupes
   - homebrew/php
 
@@ -63,11 +58,14 @@ homebrew_cask_apps:
   - alfred
   - filezilla
   - firefox
+  - focus
+  - gimp
   - github-desktop
   - google-chrome
   - harvest
   - intellij-idea
   - jing
+  - qbserve
   - sequel-pro
   - skype
   - slack
