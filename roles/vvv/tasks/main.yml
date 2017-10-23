@@ -20,4 +20,4 @@
   with_items: "{{ vagrant_plugins }}"
   args:
     executable: /bin/bash
-  when: "'{{ item }}' not in vagrant_plugins_existing.stdout"
+  when: "item not in vagrant_plugins_existing.stdout"
