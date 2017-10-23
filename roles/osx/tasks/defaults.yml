@@ -267,6 +267,12 @@
 - name: Make Dock icons of hidden applications translucent
   osx_defaults: domain=com.apple.dock key=showhidden type=bool value=true
 
+- name: Enable Dock magnification
+  osx_defaults: domain=com.apple.dock key=magnification type=bool value=true
+
+- name: Set up the large size for the Dock icons
+  osx_defaults: domain=com.apple.dock key=largesize type=int value=98
+
   # Hot corners
   # Possible values:
   #  0: no-op
