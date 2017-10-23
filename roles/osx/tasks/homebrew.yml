@@ -91,13 +91,13 @@
   always_run: yes
   changed_when: false
 
-- name: Install configured cask applications.
-  homebrew_cask:
-    name: "{{ item }}"
-    state: present
-#    options: "appdir={{ homebrew_cask_appdir }}" # enable options once Ansible is 2.2 or greater
-  with_items: "{{ homebrew_cask_apps }}"
-  when: "'{{ item }}' not in homebrew_cask_list.stdout"
+#- name: Install configured cask applications.
+#  homebrew_cask:
+#    name: "{{ item }}"
+#    state: present
+##    options: "appdir={{ homebrew_cask_appdir }}" # enable options once Ansible is 2.2 or greater
+#  with_items: "{{ homebrew_cask_apps }}"
+#  when: "item not in homebrew_cask_list.stdout"
 
 - name: Check for Brewfile.
   stat:
