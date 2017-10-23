@@ -110,7 +110,7 @@
   osx_defaults: domain=com.apple.screensaver key=askForPasswordDelay type=float value=5
 
 - name: Save screenshots to desktop
-  osx_defaults: domain=com.apple.screencapture key=location value="${HOME}/Desktop"
+  osx_defaults: domain=com.apple.screencapture key=location value="${HOME}/Pictures/Screenshots"
   become: true
 
 - name: Save screenshots in PNG format
