@@ -282,12 +282,18 @@
 - name: Setup Hot Corners
   osx_defaults:
     domain: com.apple.dock
-    key: "wvous-{{ item[0] }}-corner"
+    key: "wvous-{{ item.key }}-corner"
     type: int
-    value: "{{ item[1] }}"
-  with_nested:
-    - [ 'bl', 'br', 'tl', 'tr' ]
-    - [    4,    3,    5,    7 ]
+    value: "{{ item.value }}"
+  with_items:
+    - key: bl
+      value: 4
+    - key: br
+      value: 3
+    - key: tl
+      value: 5
+    - key: tr
+      value: 7
 
 - name: Setup Hot Corners modifiers
   osx_defaults:
