@@ -69,7 +69,7 @@
   osx_defaults: key=com.apple.mouse.tapBehavior type=int value=1
 
 - name: Enable tapping for external trackpad
-  osx_defaults: domain=com.apple.driver.AppleBluetoothMultitouch.trackpad key=Clicking type=bool value=true
+  osx_defaults: domain=com.apple.driver.AppleBluetoothMultitouch.trackpad key=Clicking type=int value=1
 
 - name: Increase sound quality for Bluetooth headphones/headsets
   osx_defaults: domain=com.apple.BluetoothAudioAgent key="Apple Bitpool Min (editable)" type=int value=40
