@@ -6,7 +6,7 @@
     dest: "{{ ip_web_root }}"
     repo: "{{ ip_git_url }}"
     force: yes
-    refspec: "{{ ip_git_refspec }}"
+    version: "{{ ip_git_version }}"
   register: ip_git_status
 
 - name: Debug git status
