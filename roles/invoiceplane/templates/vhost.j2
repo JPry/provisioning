@@ -25,6 +25,11 @@
 
     set $upstream php70;
 
+    # Make sure the .well-known directory can be served
+    location ~ /.well-known {
+        allow all;
+    }
+
     # this prevents hidden files (beginning with a period) from being served
     location ~ /\. {
         access_log off;
