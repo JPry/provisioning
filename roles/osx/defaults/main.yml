@@ -13,16 +13,27 @@ homebrew_use_brewfile: false
 homebrew_brewfile_dir: '~'
 
 homebrew_installed_packages:
+  - ansible
   - bash
   - bash-completion
   - byobu
+  - composer
+  - deployer
   - dpkg
+  - geoip
   - gettext
   - git
+  - git-flow
   - hub
+  - libiconv
   - libmemcached
+  - libxml2
+  - lsyncd
   - nmap
-  - node
+  - nvm
+  - openssl@1.1
+  - platformio
+  - pv
   - pyenv
   - pyenv-virtualenv
   - python
@@ -30,47 +41,64 @@ homebrew_installed_packages:
   - rbenv
   - redis
   - rename
+  - sphinx-doc
   - the_silver_searcher
   - tig
+  - travis
   - tree
   - utf8proc
   - vcprompt
   - wget
+  - wp-cli
   - yarn
   - zlib
   - zsh
 
+  # For Valet+
+  - dnsmasq
+  - mailhog
+  - mariadb
+  - mysql-utilities
+  - nginx
+  - redis
+  - valet-php@5.6
+  - valet-php@7.1
+  - valet-php@7.2
+  - valet-php@7.3
+
   # Taps
   - box
-  - composer
-  - php70
-  - php70-xdebug
-  - phpunit
-  - wp-cli
 
 homebrew_taps:
+  - henkrehorst/php
   - homebrew/core
-  - caskroom/cask
+  - homebrew/cask
   - homebrew/dupes
-  - homebrew/php
+  - homebrew/services
+  - humbug/box
 
 homebrew_cask_apps:
+  - 1password-cli
   - alfred
+  - cloudapp
+  - docker
+  - dropbox
   - filezilla
   - firefox
+  - flow
   - focus
   - gimp
-  - github-desktop
+  - github
   - google-chrome
+  - gpg-suite
   - harvest
+  - insomnia
   - intellij-idea
-  - jing
+  - keybase
+  - launchcontrol
+  - poedit
   - qbserve
   - sequel-pro
   - skype
   - slack
-  - vagrant
-  - virtualbox
-
-homebrew_install_head:
-  - ansible
+  - visual-studio-code
