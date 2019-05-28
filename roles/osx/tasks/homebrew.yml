@@ -6,7 +6,6 @@
   shell: whoami
   register: homebrew_whoami
   changed_when: false
-  always_run: true
 
 - name: Ensure Homebrew parent directory has correct permissions.
   file:

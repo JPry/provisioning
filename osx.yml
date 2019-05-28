@@ -5,5 +5,97 @@
   vars_files:
     - private_vars/osx.yml
   roles:
-    - osx
+    - role: geerlingguy.homebrew
+      homebrew_installed_packages:
+        - ansible
+        - bash
+        - bash-completion
+        - byobu
+        - composer
+        - deployer
+        - dpkg
+        - geoip
+        - gettext
+        - git
+        - git-flow
+        - hub
+        - libiconv
+        - libmemcached
+        - libxml2
+        - lsyncd
+        - nmap
+        - nvm
+        - openssl@1.1
+        - platformio
+        - pv
+        - pyenv
+        - pyenv-virtualenv
+        - python
+        - python3
+        - rbenv
+        - redis
+        - rename
+        - sphinx-doc
+        - the_silver_searcher
+        - tig
+        - travis
+        - tree
+        - utf8proc
+        - vcprompt
+        - wget
+        - wp-cli
+        - yarn
+        - zlib
+        - zsh
+
+        # For Valet+
+        - dnsmasq
+        - mailhog
+        - mariadb
+        - mysql-utilities
+        - nginx
+        - redis
+        - valet-php@5.6
+        - valet-php@7.1
+        - valet-php@7.2
+        - valet-php@7.3
+
+        # Taps
+        - box
+
+      homebrew_taps:
+        - henkrehorst/php
+        - homebrew/core
+        - homebrew/cask
+        - homebrew/dupes
+        - homebrew/services
+        - humbug/box
+
+      homebrew_cask_apps:
+        - 1password-cli
+        - alfred
+        - cloudapp
+        - docker
+        - dropbox
+        - filezilla
+        - firefox
+        - flow
+        - focus
+        - gimp
+        - github
+        - google-chrome
+        - gpg-suite
+        - harvest
+        - insomnia
+        - intellij-idea
+        - keybase
+        - launchcontrol
+        - poedit
+        - qbserve
+        - sequel-pro
+        - skype
+        - slack
+        - visual-studio-code
+
+
     - common
