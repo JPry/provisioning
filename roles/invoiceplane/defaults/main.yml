@@ -4,7 +4,7 @@
 ip_install_name: invoiceplane
 ip_web_root: "/var/www/{{ ip_install_name }}"
 ip_git_url: https://github.com/InvoicePlane/InvoicePlane.git
-ip_git_version: v1.5.8
+ip_git_version: v1.5.9
 ip_domain: "{{ ansible_fqdn }}"
 ip_url: "http://{{ ip_domain }}"
 ip_db_user: "{{ ip_install_name }}"
