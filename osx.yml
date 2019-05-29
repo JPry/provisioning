@@ -67,7 +67,6 @@
         - henkrehorst/php
         - homebrew/core
         - homebrew/cask
-        - homebrew/dupes
         - homebrew/services
         - humbug/box
 
@@ -77,8 +76,6 @@
         - cloudapp
         - docker
         - dropbox
-        - filezilla
-        - firefox
         - flow
         - focus
         - gimp
@@ -87,7 +84,7 @@
         - gpg-suite
         - harvest
         - insomnia
-        - intellij-idea
+        - jetbrains-toolbox
         - keybase
         - launchcontrol
         - poedit
@@ -95,7 +92,12 @@
         - sequel-pro
         - skype
         - slack
+        - timing
         - visual-studio-code
-
+      homebrew_user: jpry
+      homebrew_group: admin
 
     - common
+    - role: geerlingguy.composer
+      composer_global_packages:
+        - { name: weprovide/valet-plus, release: "^1.0" }
