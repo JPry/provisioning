@@ -94,6 +94,7 @@
         - skype
         - slack
         - timing
+        - tunnelblick
         - visual-studio-code
       homebrew_user: jpry
       homebrew_group: admin
