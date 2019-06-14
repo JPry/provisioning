@@ -77,9 +77,9 @@
         - cloudapp
         - docker
         - dropbox
+        - droplr
         - flow
         - focus
-        - gimp
         - github
         - google-chrome
         - gpg-suite
@@ -93,9 +93,12 @@
         - sequel-pro
         - skype
         - slack
+        - textexpander
         - timing
         - tunnelblick
         - visual-studio-code
+        - woocommercecom
+
       homebrew_user: jpry
       homebrew_group: admin
 
