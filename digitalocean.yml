@@ -20,3 +20,4 @@
 
   vars:
     nginx_client_max_body_size: 2m
+    php_version: "7.2"
