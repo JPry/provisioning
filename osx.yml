@@ -76,30 +76,37 @@
       homebrew_cask_apps:
         - 1password
         - 1password-cli
+        - adobe-acrobat-reader
         - alfred
+        - asana
         - cloudapp
         - discord
         - docker
         - dropbox
         - droplr
-        - ezeep
-        - firefox
-        - flow
+        - duckduckgo
+        - element
         - focus
+        - font-monoid
         - gimp
         - github
         - google-chrome
         - gpg-suite
+        - hashicorp-vagrant
+        - inkscape
         - insomnia
+        - jetbrains-toolbox
         - keybase
         - launchcontrol
+        - lulu
         - osxfuse
+        - pocket-casts
         - poedit
-        - qbserve
+        - protonmail-bridge
         - sequel-ace
-        - skype
         - slack
         - textexpander
+        - timing
         - transmit
         - visual-studio-code
 
