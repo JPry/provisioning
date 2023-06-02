@@ -1,7 +1,8 @@
 [osx]
-localhost ansible_connection=local
-pp-imac ansible_host=JP-Prospress-iMac.local ansible_user=jpry
-a8c-mbp ansible_host=JP-a8c-MBP.local ansible_user=jpry
+#localhost ansible_connection=local
+#pp-imac ansible_host=JP-Prospress-iMac.local ansible_user=jpry
+#a8c-mbp ansible_host=JP-a8c-MBP.local ansible_user=jpry
+a8c-imac ansible_host=jp-a8c-2021-imac.local ansible_user=jpry
 
 [droplets]
 invoiceplane ansible_host=ip.do ansible_user=root
