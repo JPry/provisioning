@@ -92,6 +92,7 @@
         - github
         - google-chrome
         - gpg-suite
+        - handbrake
         - hashicorp-vagrant
         - inkscape
         - insomnia
@@ -99,6 +100,7 @@
         - keybase
         - launchcontrol
         - lulu
+        - openvpn-connect
         - osxfuse
         - pocket-casts
         - poedit
