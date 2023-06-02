@@ -8,30 +8,43 @@
     - role: geerlingguy.homebrew
       homebrew_installed_packages:
         - ansible
+        - autoconf
         - bash
         - bash-completion
         - byobu
         - composer
         - deployer
+        - dnsmasq
         - dpkg
         - geoip
-        - gettext
         - git
-        - git-flow
+        - git-flow-avh
+        - go
+        - henkrehorst/php/valet-php@7.4
+        - henkrehorst/php/valet-php@8.0
+        - henkrehorst/php/valet-php@8.2
+        - httpd
         - hub
+        - ifuse
         - libiconv
         - libmemcached
         - libxml2
+        - lsusb
         - lsyncd
+        - lua
+        - mailhog
+        - mariadb
+        - mariadb@10.4
+        - mysql-utilities
+        - nginx
         - nmap
         - nvm
-        - openssl@1.1
+        - phpunit
         - platformio
+        - po4a
         - pv
-        - pyenv
         - pyenv-virtualenv
-        - python
-        - python3
+        - python@2
         - rbenv
         - redis
         - rename
@@ -40,69 +53,57 @@
         - tig
         - travis
         - tree
-        - utf8proc
+        - twilio/brew/twilio
         - vcprompt
         - wget
         - wp-cli
         - yarn
         - zlib
         - zsh
-
-        # For Valet+
-        - dnsmasq
-        - mailhog
-        - mariadb
-        - mysql-utilities
-        - nginx
-        - redis
-        - valet-php@5.6
-        - valet-php@7.1
-        - valet-php@7.2
-        - valet-php@7.3
+        - zsh-history-substring-search
 
         # Taps
         - box
 
       homebrew_taps:
-        - henkrehorst/php
         - homebrew/core
         - homebrew/cask
-        - homebrew/services
-        - humbug/box
+        - henkrehorst/php
+        - henkrehorst/bc
+        - twilio/brew
+        - homebrew/cask-fonts
 
       homebrew_cask_apps:
         - 1password
         - 1password-cli
         - alfred
         - cloudapp
+        - discord
         - docker
         - dropbox
         - droplr
+        - ezeep
+        - firefox
         - flow
         - focus
+        - gimp
         - github
         - google-chrome
         - gpg-suite
-        - harvest
         - insomnia
-        - jetbrains-toolbox
         - keybase
         - launchcontrol
+        - osxfuse
         - poedit
         - qbserve
-        - sequel-pro
+        - sequel-ace
         - skype
         - slack
         - textexpander
-        - timing
-        - tunnelblick
+        - transmit
         - visual-studio-code
-        - woocommercecom
 
       homebrew_user: jpry
       homebrew_group: admin
 
     - common
-    - role: geerlingguy.composer
-      composer_global_packages:
-        - { name: weprovide/valet-plus, release: "^1.0" }
